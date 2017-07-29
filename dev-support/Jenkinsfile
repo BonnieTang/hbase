@@ -107,6 +107,10 @@ curl -L  -o personality.sh "${env.PROJET_PERSONALITY}"
       }
     }
     stage ('yetus general check') {
+      when {
+        // temp disable so we can figure out what's going on in jdk builds
+        expression { false }
+      }
       environment {
         // Should be things that work with multijdk
         TESTS = 'all,-unit,-findbugs'
