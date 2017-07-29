@@ -112,6 +112,7 @@ curl -L  -o personality.sh "${env.PROJET_PERSONALITY}"
         expression { false }
       }
       environment {
+        // TODO does hadoopcheck need to be jdk specific?
         // Should be things that work with multijdk
         TESTS = 'all,-unit,-findbugs'
         // on branches that don't support jdk7, this will already be JAVA_HOME, so we'll end up not
@@ -197,11 +198,11 @@ curl -L  -o personality.sh "${env.PROJET_PERSONALITY}"
     stage ('yetus jdk8 checks') {
       when {
         not {
-          branch 'branch-1.1'
+          branch 'branch-1.1*'
         }
       }
       environment {
-        TESTS = 'mvninstall,unit,findbugs'
+        TESTS = 'mvninstall,compile,javac,unit,findbugs'
         OUTPUT_RELATIVE = "${env.OUTPUT_RELATIVE_JDK8}"
         OUTPUTDIR = "${env.OUTPUTDIR_JDK8}"
         // This isn't strictly needed on branches that only support jdk8, but doesn't hurt
